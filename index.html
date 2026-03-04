@@ -253,36 +253,31 @@
         </div>
 
         <div class="main-content">
-            <h2 class="section-title">🚀 Claude 优化仪表盘</h2>
+            <h2 class="section-title">🚀 Claude 优化工具</h2>
             <p style="font-size: 1.1rem; margin-bottom: 20px; color: #666;">
-                体验智能提示压缩与实时优化分析，最大化节省您的 Token 使用量！
+                智能提示压缩与实时优化分析，最大化节省您的 Token 使用量！
             </p>
 
-            <div style="text-align: center; margin: 30px 0;">
-                <a href="optimization-dashboard.html" class="github-btn" style="font-size: 1.2rem; padding: 15px 40px;">
-                    🎯 打开优化仪表盘
-                </a>
-            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 30px 0;">
+                <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🔧</div>
+                    <h3 style="margin-bottom: 10px; color: var(--primary-color);">智能提示压缩</h3>
+                    <p style="color: #666; margin-bottom: 20px;">一键压缩长提示，最高节省70% Token</p>
+                    <a href="optimization-dashboard.html" class="github-btn">立即体验</a>
+                </div>
 
-            <div style="background: #f0f4ff; padding: 30px; border-radius: 15px; margin: 30px 0;">
-                <h3 style="color: var(--primary-color); margin-bottom: 20px;">📊 仪表盘功能预览</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                    <div class="info-item" style="background: white;">
-                        <div class="info-value">🔍</div>
-                        <div class="info-label">实时Token监控</div>
-                    </div>
-                    <div class="info-item" style="background: white;">
-                        <div class="info-value">💰</div>
-                        <div class="info-label">节省效果追踪</div>
-                    </div>
-                    <div class="info-item" style="background: white;">
-                        <div class="info-value">🔧</div>
-                        <div class="info-label">智能提示压缩</div>
-                    </div>
-                    <div class="info-item" style="background: white;">
-                        <div class="info-value">📈</div>
-                        <div class="info-label">性能数据分析</div>
-                    </div>
+                <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">📊</div>
+                    <h3 style="margin-bottom: 10px; color: var(--primary-color);">实时Token追踪</h3>
+                    <p style="color: #666; margin-bottom: 20px;">监控对话过程中的Token使用，提供实时优化建议</p>
+                    <a href="token-dashboard.html" class="github-btn">查看追踪</a>
+                </div>
+
+                <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">💡</div>
+                    <h3 style="margin-bottom: 10px; color: var(--primary-color);">优化建议</h3>
+                    <p style="color: #666; margin-bottom: 20px;">基于使用模式，提供个性化的Token优化策略</p>
+                    <a href="#" class="github-btn" onclick="showOptimizationTips()">查看建议</a>
                 </div>
             </div>
         </div>
