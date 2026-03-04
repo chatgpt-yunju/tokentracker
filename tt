@@ -1,0 +1,121 @@
+#!/bin/bash
+# Token Tracker - 简化版命令行工具
+
+TOKEN_FILE="$(dirname "$0")/token.txt"
+BUDGET=7
+HOURLY_BUDGET=1.4
+
+# 颜色
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# 显示帮助
+show_help() {
+    echo -e "${BLUE}Token Tracker - 简化版${NC}"
+    echo ""
+    echo "使用方法:"
+    echo "  tt                - 查看统计"
+    echo "  tt '任务'         - 记录任务（自动提示输入token）"
+    echo "  tt '任务' i o    - 记录任务（i=输入token, o=输出token）"
+    echo "  tt -h            - 显示帮助"
+    echo ""
+    echo "示例:"
+    echo "  tt '修复登录bug'"
+    echo "  tt '写文档' 2000 500"
+}
+
+# 计算成本
+calc_cost() {
+    local input=$1
+    local output=$2
+    local cost=$(echo "scale=4; ($input/1000000)*3 + ($output/1000000)*15" | bc)
+    echo "$cost"
+}
+
+# 记录任务
+record_task() {
+    local name="$1"
+    local input=${2:-0}
+    local output=${3:-0}
+
+    # 如果没有提供 token，提示输入
+    if [ "$input" = "0" ] && [ "$2" = "" ]; then
+        echo -n "输入token数: "
+        read input
+        echo -n "输出token数: "
+        read output
+    fi
+
+    local cost=$(calc_cost "$input" "$output")
+    local timestamp=$(date -Iseconds)
+    echo "[$timestamp] $name - Input: $input, Output: $output, Cost: \$$cost" >> "$TOKEN_FILE"
+
+    echo -e "${GREEN}✅ 已记录: $name${NC}"
+    echo -e "${BLUE}💰 成本: \$$cost${NC}"
+}
+
+# 显示统计
+show_stats() {
+    if [ ! -f "$TOKEN_FILE" ]; then
+        echo -e "${YELLOW}暂无记录${NC}"
+        return
+    fi
+
+    local total_cost=0
+    local count=0
+    local last_cost=0
+
+    while IFS= read -r line; do
+        if [[ $line =~ Cost:\$([0-9.]+) ]]; then
+            cost="${BASH_REMATCH[1]}"
+            total_cost=$(echo "$total_cost + $cost" | bc)
+            count=$((count + 1))
+            last_cost=$cost
+        fi
+    done < "$TOKEN_FILE"
+
+    local percentage=$(echo "scale=1; ($total_cost / $BUDGET) * 100" | bc)
+    local hours=$(echo "scale=2; $total_cost / $HOURLY_BUDGET" | bc)
+
+    echo -e "${BLUE}📊 Token 统计${NC}"
+    echo "────────────────────"
+    echo "任务数:   $count"
+    echo -e "总成本:   ${YELLOW}\$$total_cost${NC}"
+    echo -e "预算:     $percentage% (\$$total_cost / \$$BUDGET)"
+    echo -e "使用时长: ${YELLOW}$hours 小时${NC}"
+    echo ""
+
+    # 预算警告
+    if (( $(echo "$percentage >= 80" | bc -l) )); then
+        echo -e "${RED}⚠️  预算警告: 已使用 ${percentage}%${NC}"
+    elif (( $(echo "$percentage >= 50" | bc -l) )); then
+        echo -e "${YELLOW}⚠️  已使用 ${percentage}%${NC}"
+    fi
+
+    # 显示最近5条
+    echo ""
+    echo -e "${BLUE}最近记录 (最后5条)${NC}"
+    tail -n 5 "$TOKEN_FILE" | while read line; do
+        echo "  $line"
+    done
+}
+
+# 主逻辑
+case "$1" in
+    -h|--help)
+        show_help
+        ;;
+    "")
+        show_stats
+        ;;
+    *)
+        if [ $# -ge 1 ]; then
+            record_task "$@"
+        else
+            show_help
+        fi
+        ;;
+esac

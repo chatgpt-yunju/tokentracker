@@ -1,89 +1,58 @@
 # Token Tracker
 
-A token usage tracker for Claude Code to optimize token consumption and monitor costs.
+Claude Code Token 使用追踪与成本监控工具
 
-## Features
-
-- 📊 Track token usage and costs
-- 💰 Monitor budget usage with warnings
-- 📈 Analyze usage trends
-- 🛠️ Generate optimization suggestions
-- 📝 Easy to use CLI interface
-
-## Installation
+## 快速开始
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/token-tracker.git
-cd token-tracker
-
-# Install dependencies
-npm install
+# 安装（已安装可跳过）
+git clone https://github.com/chatgpt-yunju/tokentracker.git
+cd tokentracker
+sudo ln -sf $(pwd)/tt /usr/local/bin/tt
 ```
 
-## Usage
+## 使用方法
 
-### Record Token Usage
-
+### 查看统计
 ```bash
-# Record a task
-node index.js record "任务名称" 输入token数 输出token数 "优化措施"
-
-# Example
-node index.js record "修复登录bug" 1500 800 "使用limit参数读取文件"
+tt
 ```
 
-### Analyze Usage Trends
-
+### 记录任务
 ```bash
-# Analyze recent trends
-node index.js analyze
+# 自动提示输入 token 数
+tt '修复登录bug'
+
+# 直接指定 token 数
+tt '写文档' 2000 500
 ```
 
-### Show Help
-
+### 帮助
 ```bash
-# Display help
-node index.js help
+tt -h
 ```
 
-## Configuration
+## 价格配置
 
-The tool uses the following default configuration:
+- **模型**: claude-sonnet-4.6
+- **输入**: $3 / M tokens
+- **输出**: $15 / M tokens
+- **预算**: $7 / 5小时 ($1.40/小时)
 
-- **Model**: claude-sonnet-4.6
-- **Input Pricing**: $3 per M tokens
-- **Output Pricing**: $15 per M tokens
-- **Budget**: $7 for 5 hours ($1.40 per hour)
+## 输出示例
 
-You can customize these settings by modifying the `index.js` file.
+```
+📊 Token 统计
+────────────────────
+任务数:   5
+总成本:   $0.1234
+预算:     1.8% ($0.1234 / $7.0000)
+使用时长: 0.09 小时
 
-## Budget Monitoring
+最近记录 (最后5条)
+  [2026-03-05T...] 修复登录bug - Input: 1500, Output: 800, Cost: $0.0195
+```
 
-The tool provides automatic budget monitoring:
+---
 
-- **80% Budget**: Warning - Consider optimizing token usage
-- **100% Budget**: Critical - Must optimize token usage immediately
-
-## Optimization Suggestions
-
-The tool automatically generates optimization suggestions based on your token usage:
-
-1. Simplify request content
-2. Simplify response output
-3. Use `/compact` to clean conversation history
-4. Optimize file reading with limit/offset parameters
-5. Use `files_with_matches` mode for Grep
-6. Parallelize independent tool calls
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Support
-
-For support, please open an issue in the [GitHub repository](https://github.com/yourusername/token-tracker/issues).
+**网站**: http://cc.yunjunet.cn | **GitHub**: https://github.com/chatgpt-yunju/tokentracker
