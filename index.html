@@ -165,17 +165,38 @@
         <div class="main-content">
             <h2 class="section-title">快速开始</h2>
 
-            <div class="cmd-box">tt</div>
-            <p class="cmd-desc">查看 Token 使用统计</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div>
+                    <h3 style="color: var(--primary-color); margin-bottom: 15px;">📱 命令行工具</h3>
+                    <div class="cmd-box">tt</div>
+                    <p class="cmd-desc">查看 Token 使用统计</p>
 
-            <div class="cmd-box">tt '任务名称'</div>
-            <p class="cmd-desc">记录任务（自动提示输入 token 数）</p>
+                    <div class="cmd-box">tt '任务名称'</div>
+                    <p class="cmd-desc">记录任务（自动提示输入 token 数）</p>
 
-            <div class="cmd-box">tt '任务名称' 输入token 输出token</div>
-            <p class="cmd-desc">记录任务（直接指定 token 数）</p>
+                    <div class="cmd-box">tt '任务名称' 输入token 输出token</div>
+                    <p class="cmd-desc">记录任务（直接指定 token 数）</p>
 
-            <div class="cmd-box">tt -h</div>
-            <p class="cmd-desc">显示帮助信息</p>
+                    <div class="cmd-box">tt -h</div>
+                    <p class="cmd-desc">显示帮助信息</p>
+                </div>
+
+                <div>
+                    <h3 style="color: var(--primary-color); margin-bottom: 15px;">🌐 在线优化仪表盘</h3>
+                    <div style="background: #f0f4ff; padding: 20px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🚀</div>
+                        <p style="margin-bottom: 15px;">使用可视化界面进行深度优化</p>
+                        <a href="optimization-dashboard.html" class="github-btn" style="font-size: 1rem; padding: 10px 20px;">
+                            打开仪表盘
+                        </a>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+                            • 提示压缩<br>
+                            • 实时监控<br>
+                            • 性能分析
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="main-content">
@@ -196,6 +217,21 @@
                 </div>
             </div>
 
+            <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 15px; color: white;">
+                <h3 style="color: white; margin-bottom: 20px;">💡 新增：智能优化助手</h3>
+                <ul style="line-height: 1.8;">
+                    <li>🔧 一键压缩长提示，最高节省70% Token</li>
+                    <li>📊 实时监控Token使用趋势</li>
+                    <li>💰 智能分析节省效果</li>
+                    <li>📈 提供个性化优化建议</li>
+                </ul>
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="optimization-dashboard.html" style="display: inline-block; background: white; color: #667eea; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                        立即体验优化助手 →
+                    </a>
+                </div>
+            </div>
+
             <div style="margin-top: 30px; padding: 20px; background: #f0f8ff; border-radius: 10px;">
                 <h3 style="color: var(--primary-color); margin-bottom: 15px;">💡 实用建议</h3>
                 <ul style="line-height: 1.8; color: #555;">
@@ -213,6 +249,41 @@
                 git clone https://github.com/chatgpt-yunju/tokentracker.git<br>
                 cd tokentracker<br>
                 sudo ln -sf $(pwd)/tt /usr/local/bin/tt
+            </div>
+        </div>
+
+        <div class="main-content">
+            <h2 class="section-title">🚀 Claude 优化仪表盘</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px; color: #666;">
+                体验智能提示压缩与实时优化分析，最大化节省您的 Token 使用量！
+            </p>
+
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="optimization-dashboard.html" class="github-btn" style="font-size: 1.2rem; padding: 15px 40px;">
+                    🎯 打开优化仪表盘
+                </a>
+            </div>
+
+            <div style="background: #f0f4ff; padding: 30px; border-radius: 15px; margin: 30px 0;">
+                <h3 style="color: var(--primary-color); margin-bottom: 20px;">📊 仪表盘功能预览</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div class="info-item" style="background: white;">
+                        <div class="info-value">🔍</div>
+                        <div class="info-label">实时Token监控</div>
+                    </div>
+                    <div class="info-item" style="background: white;">
+                        <div class="info-value">💰</div>
+                        <div class="info-label">节省效果追踪</div>
+                    </div>
+                    <div class="info-item" style="background: white;">
+                        <div class="info-value">🔧</div>
+                        <div class="info-label">智能提示压缩</div>
+                    </div>
+                    <div class="info-item" style="background: white;">
+                        <div class="info-value">📈</div>
+                        <div class="info-label">性能数据分析</div>
+                    </div>
+                </div>
             </div>
         </div>
 
