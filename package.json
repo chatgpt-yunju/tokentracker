@@ -1,0 +1,36 @@
+{
+  "name": "token-tracker",
+  "version": "1.0.0",
+  "description": "A token usage tracker for Claude Code to optimize token consumption and monitor costs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js",
+    "build": "echo 'No build needed for Node.js project'",
+    "deploy": "node deploy.js"
+  },
+  "keywords": [
+    "claude",
+    "token",
+    "tracker",
+    "optimization",
+    "cost",
+    "monitoring"
+  ],
+  "author": "AI Short Video Management System",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "0.0.1-security"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/token-tracker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/token-tracker/issues"
+  },
+  "homepage": "https://cc.yunjunet.cn/token-tracker",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
