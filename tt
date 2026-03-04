@@ -31,15 +31,16 @@ show_help() {
 calc_cost() {
     local input=$1
     local output=$2
-    local cost=$(echo "scale=4; ($input/1000000)*3 + ($output/1000000)*15" | bc)
-    echo "$cost"
+    # 使用 scale=4 精确计算，保留4位小数
+    echo "scale=4; ($input/1000000)*3 + ($output/1000000)*15" | bc
 }
 
-# 记录任务
+# 记录任务（带优化建议检查）
 record_task() {
     local name="$1"
     local input=${2:-0}
     local output=${3:-0}
+    local suggestion=""
 
     # 如果没有提供 token，提示输入
     if [ "$input" = "0" ] && [ "$2" = "" ]; then
@@ -51,34 +52,35 @@ record_task() {
 
     local cost=$(calc_cost "$input" "$output")
     local timestamp=$(date -Iseconds)
-    echo "[$timestamp] $name - Input: $input, Output: $output, Cost: \$$cost" >> "$TOKEN_FILE"
+
+    # 优化建议：根据token使用情况提供建议
+    if [ "$input" -gt 100000 ]; then
+        suggestion=" (💡 建议：精简指令，减少输入token)"
+    elif [ "$output" -gt 50000 ]; then
+        suggestion=" (💡 建议：请求分段输出，减少输出token)"
+    fi
+
+    echo "[$timestamp] $name - Input: $input, Output: $output, Cost: \$$cost$suggestion" >> "$TOKEN_FILE"
 
     echo -e "${GREEN}✅ 已记录: $name${NC}"
     echo -e "${BLUE}💰 成本: \$$cost${NC}"
 }
 
-# 显示统计
+# 显示统计（优化读取）
 show_stats() {
     if [ ! -f "$TOKEN_FILE" ]; then
         echo -e "${YELLOW}暂无记录${NC}"
         return
     fi
 
-    local total_cost=0
-    local count=0
-    local last_cost=0
+    # 优化：使用 awk 一次性计算，减少循环
+    local stats=$(awk -F'Cost:\$' '/Cost:/ {cost+=$2; count++} END {printf "%s %s", cost, count}' "$TOKEN_FILE")
+    total_cost=$(echo "$stats" | cut -d' ' -f1)
+    count=$(echo "$stats" | cut -d' ' -f2)
 
-    while IFS= read -r line; do
-        if [[ $line =~ Cost:\$([0-9.]+) ]]; then
-            cost="${BASH_REMATCH[1]}"
-            total_cost=$(echo "$total_cost + $cost" | bc)
-            count=$((count + 1))
-            last_cost=$cost
-        fi
-    done < "$TOKEN_FILE"
-
-    local percentage=$(echo "scale=1; ($total_cost / $BUDGET) * 100" | bc)
-    local hours=$(echo "scale=2; $total_cost / $HOURLY_BUDGET" | bc)
+    # 计算百分比和时长
+    percentage=$(echo "scale=1; ($total_cost / $BUDGET) * 100" | bc)
+    hours=$(echo "scale=2; $total_cost / $HOURLY_BUDGET" | bc)
 
     echo -e "${BLUE}📊 Token 统计${NC}"
     echo "────────────────────"
@@ -95,12 +97,10 @@ show_stats() {
         echo -e "${YELLOW}⚠️  已使用 ${percentage}%${NC}"
     fi
 
-    # 显示最近5条
+    # 显示最近5条（使用 tail -n 5 优化读取）
     echo ""
     echo -e "${BLUE}最近记录 (最后5条)${NC}"
-    tail -n 5 "$TOKEN_FILE" | while read line; do
-        echo "  $line"
-    done
+    tail -n 5 "$TOKEN_FILE" | sed 's/^/  /'
 }
 
 # 主逻辑
